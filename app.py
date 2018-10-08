@@ -1,7 +1,7 @@
 import json
 import os
 
-from flask import Flask, render_template, request, send_from_directory, abort, url_for, Response
+from flask import Flask, render_template, request, send_from_directory, abort, url_for, Response, send_file
 
 from common import util
 from convert import video, image, audio
@@ -29,10 +29,13 @@ def wrap_request(converter_function):
         result = converter_function(source, output, request.values)
         os.remove(source)
         if result == 0:
-            return Response(json.dumps({
-                'status': 'success',
-                'file_url': url_for('files', filename=util.get_filename(filename, request.values['output']))
-            }), mimetype='application/json')
+            if 'json' in request.args and request.args == True:
+                return Response(json.dumps({
+                    'status': 'success',
+                    'file_url': url_for('files', filename=util.get_filename(filename, request.values['output']))
+                }), mimetype='application/json')
+            else:
+                return send_file(output)
     except KeyError:
         pass
     abort(400)
