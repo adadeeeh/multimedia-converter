@@ -25,7 +25,7 @@ python -m venv venv
 ### Install Dependencies
 
 ```sh
-pip install -r requirements
+pip install -r requirements.txt
 ```
 
 ### Run the Server
