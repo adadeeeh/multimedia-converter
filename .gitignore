@@ -258,5 +258,9 @@ dmypy.json
 pyvenv.cfg
 pip-selfcheck.json
 
+### Multimedia Converter ###
+# Upload Folder
+.files/
+
 
 # End of https://www.gitignore.io/api/python,pycharm+all,intellij+all
