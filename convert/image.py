@@ -7,12 +7,12 @@ OUTPUT = 'output'
 
 
 def convert(source, output, args):
-    im: Image.Image = Image.open(source)
+    im = Image.open(source)
     if RESOLUTION in args:
         width, height = tuple(args[RESOLUTION].split('x'))
-        im.resize((int(width), int(height)))
+        im = im.resize((int(width), int(height)))
     if COLOR_DEPTH in args:
-        im.convert(colors=args[COLOR_DEPTH])
+        im = im.convert(colors=args[COLOR_DEPTH])
     if CONVERSION_RATE in args:
         pass
     im.save(output, args[OUTPUT])
