@@ -29,22 +29,19 @@ def files(filename):
 
 
 def wrap_request(converter_function):
-    try:
-        filename = util.save_uploaded_file(request.files['file'])
-        source = util.get_temp_path(filename)
-        output = util.get_output_path(filename, request.values['output'])
-        result = converter_function(source, output, request.values)
-        os.remove(source)
-        if result == 0:
-            if 'json' in request.args and request.args == True:
-                return Response(json.dumps({
-                    'status': 'success',
-                    'file_url': url_for('files', filename=util.get_filename(filename, request.values['output']))
-                }), mimetype='application/json')
-            else:
-                return send_file(output)
-    except KeyError:
-        pass
+    filename = util.save_uploaded_file(request.files['file'])
+    source = util.get_temp_path(filename)
+    output = util.get_output_path(filename, request.values['output'])
+    result = converter_function(source, output, request.values)
+    os.remove(source)
+    if result == 0:
+        if 'json' in request.args and request.args == True:
+            return Response(json.dumps({
+                'status': 'success',
+                'file_url': url_for('files', filename=util.get_filename(filename, request.values['output']))
+            }), mimetype='application/json')
+        else:
+            return send_file(output)
     abort(400)
 
 
