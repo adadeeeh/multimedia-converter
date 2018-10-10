@@ -14,9 +14,9 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
             <div class="collapse navbar-collapse justify-content-md-center">
                 <ul class="navbar-nav">
-                    <li class="nav-item active"><a class="nav-link" href="/">Audio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/">Audio</a></li>
                     <li class="nav-item"><a class="nav-link" href="image">Image</a></li>
-                    <li class="nav-item"><a class="nav-link" href="video">Video</a></li>
+                    <li class="nav-item active"><a class="nav-link" href="video">Video</a></li>
                 </ul>
             </div>
         </nav>
@@ -24,9 +24,25 @@
             <div class="jumbotron">
                 <div class="col-sm-8 mx-auto">
                     <div class="form-group row">
-                        <label for="bitrate" class="col-3 col-form-label">Bitrate</label>
+                        <label for="frame-size" class="col-3 col-form-label">Frame Size</label>
                         <div class="col-2">
-                          <input class="form-control" type="text" value="" id="width-input" title="In B/s">
+                          <input class="form-control" type="text" value="" id="width-input" title="width">
+                        </div>
+                        <label class="col-form-label" for="height">x</label>
+                        <div class="col-2">
+                          <input class="form-control" type="text" value="" id="height-input" title="height">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="frame-rate" class="col-3 col-form-label">Frame Rate</label>
+                        <div class="col-2">
+                            <input class="form-control" type="text" value="" title="In FPS">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Bitrate" class="col-3 col-form-label">Bitrate</label>
+                        <div class="col-2">
+                            <input class="form-control" type="text" value="" title="In B/s">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -37,12 +53,13 @@
                     </div>
                     <div class="form-group row">
                         <label for="output" class="col-3 col-form-label">Output</label>
-                        <div class="col-2">
+                        <div class="col-3">
                             <select class="form-control" id="">
-                                <option value="wav">wav</option>
-                                <option value="mp3">mp3</option>
-                                <option value="aac">aac</option>
-                                <option value="ogg">ogg</option>
+                                <option value="wmv">wmv</option>
+                                <option value="mp4">mp4</option>
+                                <option value="ffmpeg">ffmpeg</option>
+                                <option value="mkv">mkv</option>
+                                <option value="avi">avi</option>
                             </select>
                         </div>
                     </div>
