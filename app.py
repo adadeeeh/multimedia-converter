@@ -1,7 +1,6 @@
-import json
 import os
 
-from flask import Flask, render_template, request, send_from_directory, abort, url_for, Response, send_file
+from flask import Flask, render_template, request, send_from_directory, abort, url_for, redirect
 
 from common import util
 from convert import video, image, audio
@@ -35,13 +34,7 @@ def wrap_request(converter_function):
     result = converter_function(source, output, request.values)
     os.remove(source)
     if result == 0:
-        if 'json' in request.args and request.args == True:
-            return Response(json.dumps({
-                'status': 'success',
-                'file_url': url_for('files', filename=util.get_filename(filename, request.values['output']))
-            }), mimetype='application/json')
-        else:
-            return send_file(output)
+        return redirect(url_for('files', filename=util.get_filename(filename, request.values['output'])))
     abort(400)
 
 
