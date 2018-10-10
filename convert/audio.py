@@ -10,7 +10,7 @@ ffmpeg_params = {
 def convert(source, output, args):
     command = 'ffmpeg -i %s' % source
     for key in args:
-        if key in ffmpeg_params:
+        if ffmpeg_params.get(key):
             command += ' -%s %s' % (ffmpeg_params[key], str(args[key]))
     command += ' %s' % output
     return subprocess.call(command.split())

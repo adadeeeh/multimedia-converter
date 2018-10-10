@@ -16,7 +16,7 @@ ffmpeg_params = {
 def convert(source, output, args):
     command = 'ffmpeg -i %s' % source
     for key in args:
-        if key in ffmpeg_params:
+        if ffmpeg_params.get(key):
             command += ' -%s %s' % (ffmpeg_params[key], str(args[key]))
     if WIDTH in args and HEIGHT in args:
         command += ' -s %sx%s' % (args[WIDTH], args[HEIGHT])
