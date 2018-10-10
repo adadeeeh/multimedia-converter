@@ -22,38 +22,40 @@
         </nav>
         <main role="main">
             <div class="jumbotron">
-                <div class="col-sm-8 mx-auto">
-                    <div class="form-group row">
-                        <label for="bitrate" class="col-3 col-form-label">Bitrate</label>
-                        <div class="col-2">
-                          <input class="form-control" type="text" value="" id="width-input" title="In B/s">
+                <form action="/api/convert/audio" method="post" enctype="multipart/form-data" target="_blank">
+                    <div class="col-sm-8 mx-auto">
+                        <div class="form-group row">
+                            <label for="bitrate" class="col-3 col-form-label">Bitrate</label>
+                            <div class="col-2">
+                                <input name="bitrate" class="form-control" type="text" value="" id="width-input" title="In B/s">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="sample-rate" class="col-3 col-form-label">Sample Rate</label>
-                        <div class="col-2">
-                            <input class="form-control" type="text" value="" title="In kHz">
+                        <div class="form-group row">
+                            <label for="sample-rate" class="col-3 col-form-label">Sample Rate</label>
+                            <div class="col-2">
+                                <input name="sample_rate" class="form-control" type="text" value="" title="In kHz">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="output" class="col-3 col-form-label">Output</label>
-                        <div class="col-2">
-                            <select class="form-control" id="">
-                                <option value="wav">wav</option>
-                                <option value="mp3">mp3</option>
-                                <option value="aac">aac</option>
-                                <option value="ogg">ogg</option>
-                            </select>
+                        <div class="form-group row">
+                            <label for="output" class="col-3 col-form-label">Output</label>
+                            <div class="col-2">
+                                <select name="output" class="form-control" id="output-input">
+                                    <option value="wav">wav</option>
+                                    <option value="mp3">mp3</option>
+                                    <option value="aac">aac</option>
+                                    <option value="ogg">ogg</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="file" class="col-3 col-form-label">File</label>
-                        <div class="col-2">
-                            <input class="form-control-life" type="file" aria-describedby="fileHelp">
+                        <div class="form-group row">
+                            <label for="file" class="col-3 col-form-label">File</label>
+                            <div class="col-2">
+                                <input name="file" class="form-control-life" type="file" aria-describedby="fileHelp" required>
+                            </div>
                         </div>
+                        <button type="submit" class="btn btn-secondary">Convert</button>
                     </div>
-                    <button type="submit" class="btn btn-secondary">Convert</button>
-                </div>
+                </form>
             </div>
         </main>
             <!-- <label for="width" class="col-2 col-form-label">Width:</label>
