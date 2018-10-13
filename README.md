@@ -89,7 +89,7 @@ python -m unittest
   {
     "file": "",
     "resolution": "512x512",
-    "colors": 64,
+    "colors": 16,
     "output": "png"
   }
   ```
@@ -116,9 +116,15 @@ python -m unittest
 
 - Parameter
   - `file` (mandatory)
-  - `bitrate` = target bitrate (in B/s)
-  - `sample_rate` = audio sample rate (in kHz)
-  - `channel` (not implemented)
+  - `time_off` = start time offset (format: "hh:mm:ss")
+  - `time_off_s` `time_off_m` `time_off_s` = respective start time offset. Will only be considered if all three value is set. `time_off` will have higher priority
+  - `time_stop` = stop time (format: "hh:mm:ss")
+  - `time_stop_s` `time_stop_m` `time_stop_s` = respective stop time. Will only be considered if all three value is set. `time_stop` will have higher priority
+  - `bitrate_audio` = audio bitrate (in B/s)
+  - `sample_rate` = audio sampling rate (in Hz)
+  - `channels` = number of audio channels
+  - `disable_audio` = disable audio (boolean)
+  - `volume` = volume (0-255)
   - `output` (mandatory) = output file extension
 
 - Request
@@ -126,8 +132,19 @@ python -m unittest
   ```json
   {
     "file": "",
-    "bitrate": 128,
+    "time_off": "00:00:30",
+    "time_off_h": "0",
+    "time_off_m": "0",
+    "time_off_s": "30",
+    "time_stop": "00:01:30",
+    "time_stop_h": "0",
+    "time_stop_m": "1",
+    "time_stop_s": "30",
+    "bitrate_audio": 128,
     "sample_rate": 48000,
+    "channels": 2,
+    "disable_audio": true,
+    "volume": 128,
     "output": "ogg"
   }
   ```
@@ -154,11 +171,20 @@ python -m unittest
 
 - Parameter
   - `file` (mandatory)
-  - `frame_size` = target frame_size (in `widthxheight` format)
-  - `frame_rate` = target frame rate (in fps)
-  - `bitrate` = target bitrate (in B/s)
-  - `sample_rate` = audio sample rate (in kHz)
-  - `channel` (not implemented)
+  - `time_off` = start time offset (format: "hh:mm:ss")
+  - `time_off_s` `time_off_m` `time_off_s` = respective start time offset. Will only be considered if all three value is set. `time_off` will have higher priority
+  - `time_stop` = stop time (format: "hh:mm:ss")
+  - `time_stop_s` `time_stop_m` `time_stop_s` = respective stop time. Will only be considered if all three value is set. `time_stop` will have higher priority
+  - `rate` = frame rate (in fps)
+  - `size` = frame size (in `wxh` format)
+  - `aspect` = aspect ratio (4:3, 16:9, etc)
+  - `disable_video` = disable_video (boolean)
+  - `bitrate_video` = video bitrate (in B/s)
+  - `bitrate_audio` = audio bitrate (in B/s)
+  - `sample_rate` = audio sampling rate (in Hz)
+  - `channels` = number of audio channels
+  - `disable_audio` = disable audio (boolean)
+  - `volume` = volume (0-255)
   - `output` (mandatory) = output file extension
 
 - Request
@@ -166,10 +192,24 @@ python -m unittest
   ```json
   {
     "file": "",
-    "frame_size": "1366x768",
-    "frame_rate": 60,
-    "bitrate": 128,
+    "time_off": "00:00:30",
+    "time_off_h": "0",
+    "time_off_m": "0",
+    "time_off_s": "30",
+    "time_stop": "00:01:30",
+    "time_stop_h": "0",
+    "time_stop_m": "1",
+    "time_stop_s": "30",
+    "rate": 60,
+    "size": "1280x720",
+    "aspect": "16:9",
+    "disable_video": true,
+    "bitrate_video": 256,
+    "bitrate_audio": 128,
     "sample_rate": 48000,
+    "channels": 2,
+    "disable_audio": true,
+    "volume": 128,
     "output": "mkv"
   }
   ```
