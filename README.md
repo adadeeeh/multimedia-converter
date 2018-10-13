@@ -78,8 +78,13 @@ python -m unittest
 
 - Parameter
   - `file` (mandatory)
-  - `resolution` = target resolution (in `widthxheight` format)
-  - `colors` = color depth
+  - `width` = width
+  - `height` = height
+  - `color_mode` = color mode (`L`, `RGB`, `CMYK`)
+  - `color_depth` = color depth (0, 2, 4, 8, 16, 32, 64)
+  - `rotate` = rotate image (integer)
+  - `expand_rotate` = expand the rotated image (boolean)
+  - `transpose` = transpose image (`top_bottom`, `left_right`, `rotate_90`, `rotate_180`, `rotate_270`, `transpose`) 
   - `conversion_rate` (not implemented)
   - `output` (mandatory) = output file extension
 
