@@ -25,6 +25,34 @@
                 <form action="/api/convert/video" method="post" enctype="multipart/form-data" target="_blank">
                     <div class="col-sm-8 mx-auto">
                         <div class="form-group row">
+                            <label class="col-3 col-form-label">Start Time</label>
+                            <div class="col-2">
+                                <input name="time_off_h" class="form-control" type="number" value="" min="0" max="24">
+                            </div>
+                            <label class="col-form-label">:</label>
+                            <div class="col-2">
+                                <input name="time_off_m" class="form-control" type="number" value="" min="0" max="60">
+                            </div>
+                            <label class="col-form-label">:</label>
+                            <div class="col-2">
+                                <input type="number" class="form-control" name="time_off_s" value="" min="0" max="60">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label">Stop Time</label>
+                            <div class="col-2">
+                                <input name="time_stop_h" class="form-control" type="number" value="" min="0" max="24">
+                            </div>
+                            <label class="col-form-label">:</label>
+                            <div class="col-2">
+                                <input name="time_stop_m" class="form-control" type="number" value="" min="0" max="60">
+                            </div>
+                            <label class="col-form-label">:</label>
+                            <div class="col-2">
+                                <input type="number" class="form-control" name="time_stop_s" value="" min="0" max="60">
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="frame-size" class="col-3 col-form-label">Frame Size</label>
                             <div class="col-2">
                                 <input name="width" class="form-control" type="text" value="" id="width-input" title="width">
@@ -35,15 +63,34 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="col-3 col-form-label">Aspect Ratio</label>
+                            <div class="col-2">
+                                <select name="aspect" class="custom-select">
+                                    <option value=""></option>
+                                    <option value="4:3">4:3</option>
+                                    <option value="16:9">16:9</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label">Disable Video</label>
+                            <div class="col-2">
+                                <select name="disble_video" class="custom-select">
+                                    <option value="">No</option>
+                                    <option value="true">Yes</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="frame-rate" class="col-3 col-form-label">Frame Rate</label>
                             <div class="col-2">
-                                <input name="frame_rate" class="form-control" type="text" value="" title="In FPS">
+                                <input name="rate" class="form-control" type="text" value="" title="In FPS">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="Bitrate" class="col-3 col-form-label">Bitrate</label>
                             <div class="col-2">
-                                <input name="bitrate" class="form-control" type="text" value="" title="In B/s">
+                                <input name="sample_rate" class="form-control" type="text" value="" title="In B/s">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -53,9 +100,30 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="col-3 col-form-label">Channels</label>
+                            <div class="col-2">
+                                <input type="text" name="channels" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label">Disable Audio</label>
+                            <div class="col-2">
+                                <select name="disable_audio" class="custom-select">
+                                    <option value="">No</option>
+                                    <option value="true">Yes</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label">Volume</label>
+                            <div class="col-2">
+                                <input type="number" class="form-control" name="volume" min="0" max="255">
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="output" class="col-3 col-form-label">Output</label>
                             <div class="col-3">
-                                <select name="output" class="form-control" id="output-input">
+                                <select name="output" class="custom-select" id="output-input">
                                     <option value="wmv">wmv</option>
                                     <option value="mp4">mp4</option>
                                     <option value="ffmpeg">ffmpeg</option>
@@ -75,10 +143,6 @@
                 </form>
             </div>
         </main>
-            <!-- <label for="width" class="col-2 col-form-label">Width:</label>
-            <input class="form-control" title="Enter new width for JPG image" type="text" name="width" id="width" value=""/> x
-            <label for="height">Height:</label>
-            <input class="form-control" title="Enter new height for JPG image" type="text" name="height" id="height" value=""/> pixels -->
     </div> 
     
 </body>
