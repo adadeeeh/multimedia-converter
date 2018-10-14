@@ -35,9 +35,57 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="color-depth" class="col-3 col-form-label">Color Depth</label>
+                            <label for="color-mode" class="col-3 col-form-label">Color Mode</label>
+                            <div class="col-auto">
+                                <select name="color_mode" class="form-control" id="output-cmode">
+                                    <option value=""></option>
+                                    <option value="L">L</option>
+                                    <option value="RGB">RGB</option>
+                                    <option value="CMYK">CMYK</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="color_depth" class="col-3 col-form-label">Color Depth</label>
                             <div class="col-2">
-                                <input name="color_depth" class="form-control" type="text" value="">
+                                    <select name="color_depth" class="form-control" id="output-cmode">
+                                        <option value=""></option>
+                                        <option value="2">2</option>
+                                        <option value="4">4</option>
+                                        <option value="8">8</option>
+                                        <option value="16">16</option>
+                                        <option value="32">32</option>
+                                        <option value="64">64</option>
+                                    </select>
+                                </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="rotate" class="col-3 col-form-label">Rotate</label>
+                            <div class="col-2">
+                                <input name="rotate" class="form-control" type="text" value="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="expand_rotate" class="col-3 col-form-label">Expand Rotate</label>
+                            <div class="col-2">
+                                <select name="expand_rotate" class="form-control">
+                                    <option value="true">Yes</option>
+                                    <option value="">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="transpose" class="col-3 col-form-label">Transpose</label>
+                            <div class="col-auto">
+                                <select name="transpose" class="form-control">
+                                    <option value=""></option>
+                                    <option value="top_bottom">Top Bottom</option>
+                                    <option value="left_right">Left Right</option>
+                                    <option value="rotate_90">Rotate 90</option>
+                                    <option value="rotate_180">Rotate 180</option>
+                                    <option value="rotate_270">Rotate 270</option>
+                                    <option value="transpose">Transpose</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">

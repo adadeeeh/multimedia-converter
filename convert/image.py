@@ -22,7 +22,7 @@ flip_mode = {
 
 
 def convert(source, output, args):
-    im: Image.Image = Image.open(source)
+    im = Image.open(source)
     if args.get(WIDTH) and args.get(HEIGHT):
         im = im.resize((int(args[WIDTH]), int(args[HEIGHT])))
     if args.get(COLOR_DEPTH):
