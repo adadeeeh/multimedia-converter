@@ -14,13 +14,16 @@ app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024  # 10 MB
 def hello_world():
     return render_template('index.html')
 
+
 @app.route('/image')
 def image_route():
     return render_template('image.html')
 
+
 @app.route('/video')
 def video_route():
     return render_template('video.html')
+
 
 @app.route('/files/<path:filename>')
 def files(filename):
