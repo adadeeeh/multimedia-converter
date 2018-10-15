@@ -14,6 +14,7 @@ TIME_STOP_M = 'time_stop_m'
 TIME_STOP_S = 'time_stop_s'
 
 DISABLE_AUDIO = 'disable_audio'
+DISABLE_VIDEO = 'disable_video'
 
 ffmpeg_params = {
     'time_off': 'ss',
