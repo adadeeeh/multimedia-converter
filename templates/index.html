@@ -53,15 +53,30 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="bitrate" class="col-3 col-form-label">Bitrate</label>
+                            <label class="col-3 col-form-label">Audio Bitrate</label>
                             <div class="col-2">
-                                <input name="bitrate" class="form-control" type="text" value="" id="width-input" title="In B/s">
+                                <select name="bitrate_audio" class="custom-select">
+                                    <option value=""></option>
+                                    <option value="32k">32 kb/s</option>
+                                    <option value="64k">64 kb/s</option>
+                                    <option value="128k">128 kb/s</option>
+                                    <option value="160k">160 kb/s</option>
+                                    <option value="192k">192 kb/s</option>
+                                    <option value="256k">256 kb/s</option>
+                                    <option value="320k">320 kb/s</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="sample-rate" class="col-3 col-form-label">Sample Rate</label>
+                            <label class="col-3 col-form-label">Audio Sampling Rate</label>
                             <div class="col-2">
-                                <input name="sample_rate" class="form-control" type="text" value="" title="In kHz">
+                                <select name="sample_rate" class="custom-select">
+                                    <option value=""></option>
+                                    <option value="16000">16000 Hz</option>
+                                    <option value="22050">22050 Hz</option>
+                                    <option value="44100">44100 Hz</option>
+                                    <option value="48000">48000 Hz</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -71,18 +86,15 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-3 col-form-label">Disable Audio</label>
-                            <div class="col-2">
-                                <select name="disable_audio" class="custom-select">
-                                    <option value="">No</option>
-                                    <option value="true">Yes</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
                             <label class="col-3 col-form-label">Volume</label>
                             <div class="col-2">
                                 <input type="number" name="volume" class="form-control" min="0" max="255">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label">Output Filename</label>
+                            <div class="col-2">
+                                <input type="text" name="filename" value="" class="form-control">
                             </div>
                         </div>
                         <div class="form-group row">

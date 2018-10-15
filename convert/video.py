@@ -14,7 +14,6 @@ TIME_STOP_M = 'time_stop_m'
 TIME_STOP_S = 'time_stop_s'
 
 DISABLE_AUDIO = 'disable_audio'
-DISABLE_VIDEO = 'disable_video'
 
 ffmpeg_params = {
     'time_off': 'ss',
@@ -22,17 +21,16 @@ ffmpeg_params = {
     'rate': 'r',
     'size': 's',
     'aspect': 'aspect',
-    'disable_video': 'vn',
-    'bitrate_video': '-b:v',
-    'bitrate_audio': '-b:a',
+    'bitrate_video': 'b:v',
+    'bitrate_audio': 'b:a',
     'sample_rate': 'ar',
     'channels': 'ac',
-    'disable_audio': 'an',
     'volume': 'vol'
 }
 
 
 def convert(source, output, args):
+    print(args)
     command = 'ffmpeg -i %s' % source
     for key in args:
         if args.get(key) and ffmpeg_params.get(key):
@@ -44,8 +42,9 @@ def convert(source, output, args):
     if args.get(TIME_STOP_H) and args.get(TIME_STOP_M) and args.get(TIME_STOP_S) and not args.get(TIME_STOP):
         command += ' -to %s:%s:%s' % (args[TIME_STOP_H], args[TIME_STOP_M], args[TIME_STOP_S])
     if args.get(DISABLE_AUDIO):
-        command += '-an'
+        command += ' -an'
     if args.get(DISABLE_VIDEO):
-        command += '-vn'
-    command += ' -f %s' % output
+        command += ' -vn'
+    command += ' %s' % output
+    print(command)
     return subprocess.call(command.split())

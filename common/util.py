@@ -9,8 +9,8 @@ def generate_filename():
     return str(uuid.uuid4())
 
 
-def save_uploaded_file(file):
-    filename = generate_filename()
+def save_uploaded_file(file, filename=''):
+    filename = filename or generate_filename()
     if not os.path.exists(UPLOAD_FOLDER):
         os.mkdir(UPLOAD_FOLDER)
     file.save(get_temp_path(filename))

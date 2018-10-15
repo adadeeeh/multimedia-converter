@@ -1,4 +1,5 @@
 import os
+import time
 
 from flask import Flask, render_template, request, send_from_directory, abort, url_for, redirect
 
@@ -7,7 +8,7 @@ from convert import video, image, audio
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = util.UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024  # 10 MB
+app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 10 MB
 
 
 @app.route('/')
@@ -31,11 +32,13 @@ def files(filename):
 
 
 def wrap_request(converter_function):
-    filename = util.save_uploaded_file(request.files['file'])
+    start_time = time.time()
+    filename = util.save_uploaded_file(request.files['file'], request.values.get('filename'))
     source = util.get_temp_path(filename)
     output = util.get_output_path(filename, request.values['output'])
     result = converter_function(source, output, request.values)
     os.remove(source)
+    print('Execution time: %d' % ((time.time() - start_time) * 1000))
     if result == 0:
         return redirect(url_for('files', filename=util.get_filename(filename, request.values['output'])))
     abort(400)

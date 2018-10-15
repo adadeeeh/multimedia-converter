@@ -14,7 +14,7 @@ DISABLE_AUDIO = 'disable_audio'
 ffmpeg_params = {
     'time_off': 'ss',
     'time_stop': 'to',
-    'bitrate_audio': '-b:a',
+    'bitrate_audio': 'b:a',
     'sample_rate': 'ar',
     'channels': 'ac',
     'volume': 'vol'
@@ -32,7 +32,7 @@ def convert(source, output, args):
     if args.get(TIME_STOP_H) and args.get(TIME_STOP_M) and args.get(TIME_STOP_S) and not args.get(TIME_STOP):
         command += ' -to %s:%s:%s' % (args[TIME_STOP_H], args[TIME_STOP_M], args[TIME_STOP_S])
     if args.get(DISABLE_AUDIO):
-        command += '-an'
+        command += ' -an'
     command += ' %s' % output
     print(command)
     return subprocess.call(command.split())
