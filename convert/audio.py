@@ -17,21 +17,22 @@ ffmpeg_params = {
     'bitrate_audio': '-b:a',
     'sample_rate': 'ar',
     'channels': 'ac',
-    'codec_audio': 'acodec',
     'volume': 'vol'
 }
 
 
 def convert(source, output, args):
     command = 'ffmpeg -i %s' % source
+    print(args)
     for key in args:
-        if ffmpeg_params.get(key):
+        if args.get(key) and ffmpeg_params.get(key):
             command += ' -%s %s' % (ffmpeg_params[key], str(args[key]))
     if args.get(TIME_OFF_H) and args.get(TIME_OFF_M) and args.get(TIME_OFF_S) and not args.get(TIME_OFF):
         command += ' -ss %s:%s:%s' % (args[TIME_OFF_H], args[TIME_OFF_M], args[TIME_OFF_S])
     if args.get(TIME_STOP_H) and args.get(TIME_STOP_M) and args.get(TIME_STOP_S) and not args.get(TIME_STOP):
         command += ' -to %s:%s:%s' % (args[TIME_STOP_H], args[TIME_STOP_M], args[TIME_STOP_S])
     if args.get(DISABLE_AUDIO):
-        command += 'an'
-    command += ' -f %s' % output
+        command += '-an'
+    command += ' %s' % output
+    print(command)
     return subprocess.call(command.split())

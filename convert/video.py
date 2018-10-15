@@ -35,7 +35,7 @@ ffmpeg_params = {
 def convert(source, output, args):
     command = 'ffmpeg -i %s' % source
     for key in args:
-        if ffmpeg_params.get(key):
+        if args.get(key) and ffmpeg_params.get(key):
             command += ' -%s %s' % (ffmpeg_params[key], str(args[key]))
     if args.get(WIDTH) and args.get(HEIGHT) and not args.get(SIZE):
         command += ' -s %sx%s' % (args[WIDTH], args[HEIGHT])
@@ -44,8 +44,8 @@ def convert(source, output, args):
     if args.get(TIME_STOP_H) and args.get(TIME_STOP_M) and args.get(TIME_STOP_S) and not args.get(TIME_STOP):
         command += ' -to %s:%s:%s' % (args[TIME_STOP_H], args[TIME_STOP_M], args[TIME_STOP_S])
     if args.get(DISABLE_AUDIO):
-        command += 'an'
+        command += '-an'
     if args.get(DISABLE_VIDEO):
-        command += 'vn'
+        command += '-vn'
     command += ' -f %s' % output
     return subprocess.call(command.split())
