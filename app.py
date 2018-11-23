@@ -11,27 +11,27 @@ app.config['UPLOAD_FOLDER'] = util.UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 10 MB
 
 
-@app.route('/')
+@app.route('/convert/audio')
 def hello_world():
-    return render_template('index.html')
+    return render_template('convert/audio.html')
 
 
-@app.route('/image')
+@app.route('/convert/image')
 def image_route():
-    return render_template('image.html')
+    return render_template('convert/image.html')
 
 
-@app.route('/video')
+@app.route('/convert/video')
 def video_route():
-    return render_template('video.html')
+    return render_template('convert/video.html')
 
 
-@app.route('/files/<path:filename>')
+@app.route('/convert/files/<path:filename>')
 def files(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 
-def wrap_request(converter_function):
+def converter(converter_function):
     start_time = time.time()
     filename = util.save_uploaded_file(request.files['file'], request.values.get('filename'))
     source = util.get_temp_path(filename)
@@ -46,17 +46,17 @@ def wrap_request(converter_function):
 
 @app.route('/api/convert/image', methods=['POST'])
 def convert_image():
-    return wrap_request(image.convert)
+    return converter(image.convert)
 
 
 @app.route('/api/convert/audio', methods=['POST'])
 def convert_audio():
-    return wrap_request(audio.convert)
+    return converter(audio.convert)
 
 
 @app.route('/api/convert/video', methods=['POST'])
 def convert_video():
-    return wrap_request(video.convert)
+    return converter(video.convert)
 
 
 if __name__ == '__main__':
