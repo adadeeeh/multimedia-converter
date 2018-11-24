@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% if stream_name %}
+            {{ stream_name }}
+        {% else %}
+            {% block title %}{% endblock %}
+        {% endif %}
+    </title>
+</head>
+<body>
+    <div>
+        <div class="mistvideo" id="mistplayer">
+            <script src="../../static/js/player.js"></script>
+
+            <script>
+            var play = function(stream_name) {
+                mistPlay(stream_name, {
+                    target: document.getElementById("mistplayer"),
+                    forceType: {% block type %}{% endblock %},
+                    controls: "stock"
+                });
+            };
+
+            play("{{ stream_name }}");
+            </script>
+        </div>
+    </div>
+
+
+    <div>
+        {% for stream in streams %}
+
+        <div>
+            <div>{{ stream.name }}</div>
+            <button onclick="play('{{ stream.name }}')">Play</button>
+        </div>
+
+        {% endfor %}
+    </div>
+</body>
+</html>
