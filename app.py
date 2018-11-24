@@ -12,7 +12,6 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = util.UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 500 * 1024 * 1024  # 50 MB
 
-MISTSERVER_FOLDER = os.path.abspath(os.path.join(app.config['UPLOAD_FOLDER'], 'mistserver'))
 AUDIO_EXTENSIONS = ('mp3', 'wmv')
 VIDEO_EXTENSIONS = ('mp4', 'mkv')
 
@@ -72,7 +71,7 @@ def add_stream():
     else:
         name = request.values.get('name')
         file = request.files['file']
-        filename = os.path.join(MISTSERVER_FOLDER, secure_filename(file.filename))
+        filename = os.path.join(util.MISTSERVER_FOLDER, secure_filename(file.filename))
         file.save(filename)
         addstream = requests.get(
             'http://localhost:4242/api?command={"addstream": {"%s": {"source": "%s"}}}' % (name, filename)).json()

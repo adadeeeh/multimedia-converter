@@ -3,6 +3,13 @@ import uuid
 
 UPLOAD_FOLDER = '.files'
 TEMP_EXTENSION = 'tmp'
+MISTSERVER_FOLDER = os.path.abspath(os.path.join(UPLOAD_FOLDER, 'mistserver'))
+
+if not os.path.exists(UPLOAD_FOLDER):
+    os.mkdir(UPLOAD_FOLDER)
+
+if not os.path.exists(MISTSERVER_FOLDER):
+    os.mkdir(MISTSERVER_FOLDER)
 
 
 def generate_filename():
@@ -11,8 +18,6 @@ def generate_filename():
 
 def save_uploaded_file(file, filename=''):
     filename = filename or generate_filename()
-    if not os.path.exists(UPLOAD_FOLDER):
-        os.mkdir(UPLOAD_FOLDER)
     file.save(get_temp_path(filename))
     return filename
 
