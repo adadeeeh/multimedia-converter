@@ -4,6 +4,7 @@ import uuid
 UPLOAD_FOLDER = '.files'
 TEMP_EXTENSION = 'tmp'
 MISTSERVER_FOLDER = os.path.abspath(os.path.join(UPLOAD_FOLDER, 'mistserver'))
+MISTSERVER_API = (os.environ.get('MISTSERVER_HOST') or 'localhost:4242') + '/api'
 
 if not os.path.exists(UPLOAD_FOLDER):
     os.mkdir(UPLOAD_FOLDER)

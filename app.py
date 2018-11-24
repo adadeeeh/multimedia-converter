@@ -86,7 +86,7 @@ def add_stream():
 
 
 def streamer(template_name, extensions, stream_name):
-    ms_api = requests.get('http://localhost:4242/api').json()
+    ms_api = requests.get(util.MISTSERVER_API).json()
     filtered = {k: v for k, v in ms_api['streams'].items() if v['source'].endswith(extensions)}
     if stream_name and stream_name not in filtered:
         raise abort(404)
