@@ -10,7 +10,9 @@ from common import util
 class MistServer:
     def __init__(self, host=None, username=None, password=None):
         self.MEDIA_FOLDER = os.environ.get('MISTSERVER_MEDIA_FOLDER') or '/mistserver/media'
-        self.HOST = host or os.environ.get('MISTSERVER_HOST') or '127.0.0.1'
+        self.HOST = host or os.environ.get('MISTSERVER_HOST') or 'http://127.0.0.1'
+        if not self.HOST.startswith('http://') and not self.HOST.startswith('https://'):
+            self.HOST = 'http://' + self.HOST
         self.USERNAME = username or os.environ.get('MISTSERVER_USERNAME')
         self.PASSWORD = password or os.environ.get('MISTSERVER_PASSWORD')
         self.challenge = None
@@ -32,10 +34,14 @@ class MistServer:
     def build_command(self, command):
         cmd = command.copy()
         cmd.update(self.build_authorization())
+        if cmd:
+            cmd = '?command=' + str(cmd)
+        else:
+            cmd = ''
         return cmd
 
     def build_url(self, command):
-        return 'http://%s:4242/api?command=%s' % (self.HOST, str(self.build_command(command)))
+        return '%s:4242/api%s' % (self.HOST, self.build_command(command))
 
     def request(self, command):
         return requests.get(self.build_url(command)).json()

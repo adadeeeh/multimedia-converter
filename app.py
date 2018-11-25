@@ -1,6 +1,7 @@
 import os
 import time
 
+import requests
 from flask import *
 
 from common import util, mistserver
@@ -8,7 +9,7 @@ from convert import video, image, audio
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = util.UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 500 * 1024 * 1024  # 50 MB
+app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50 MB
 
 ms = mistserver.MistServer()
 AUDIO_EXTENSIONS = ('mp3', 'wmv')
@@ -72,7 +73,7 @@ def add_stream():
         filename = ms.save(request.files['file'])
         addstream = ms.api({'addstream': {name: {"source": filename}}})
         streams = addstream['streams']
-        if streams['incomplete list'] == 1 and name in streams:
+        if streams.get('incomplete list') == 1 and name in streams:
             if filename.endswith(AUDIO_EXTENSIONS):
                 return redirect('/streaming/audio')
             elif filename.endswith(VIDEO_EXTENSIONS):
@@ -101,9 +102,16 @@ def streaming_video(stream_name):
     return streamer('streaming/video.html', VIDEO_EXTENSIONS, stream_name)
 
 
-@app.route('/')
-def index():
-    return request.endpoint
+@app.route('/info_<path:stream_name>.js')
+def secure_stream_info(stream_name):
+    """
+    endpoint to rewrite http to https in info_<stream_name>.js file which
+    have http:// scheme defined in all its urls.
+    :param stream_name: stream name
+    :return: same .js file with http replaced to https
+    """
+    info = requests.get('%s:8081/info_%s.js' % (ms.HOST, stream_name)).text
+    return info.replace('http:', 'https:')
 
 
 if __name__ == '__main__':

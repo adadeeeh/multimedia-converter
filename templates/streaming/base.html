@@ -15,10 +15,10 @@
         <div class="mistvideo" id="mistplayer">
             <script>
                 mistoptions = {
-                    host: '//{{ mistserver_host }}:8080'
+                    host: '{{ mistserver_host }}:8080'
                 };
             </script>
-            <script src="http://{{ mistserver_host }}:8080/player.js"></script>
+            <script src="{{ mistserver_host }}:8080/player.js"></script>
 
             <script>
             var play = function(stream_name) {
