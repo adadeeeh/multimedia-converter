@@ -3,6 +3,7 @@ import time
 
 import requests
 from flask import *
+from werkzeug import exceptions
 
 from common import util, mistserver
 from convert import video, image, audio
@@ -70,36 +71,34 @@ def add_stream():
         return render_template('streaming/add.html')
     else:
         name = request.values.get('name')
-        filename = ms.save(request.files['file'])
-        addstream = ms.api({'addstream': {name: {"source": filename}}})
-        streams = addstream['streams']
-        if streams.get('incomplete list') == 1 and name in streams:
-            if filename.endswith(AUDIO_EXTENSIONS):
-                return redirect('/streaming/audio')
-            elif filename.endswith(VIDEO_EXTENSIONS):
-                return redirect('/streaming/video')
-        abort(400)
+        file = request.files.get('file')
+        if name and file:
+            filename = ms.save(file)
+            addstream = ms.api({'addstream': {name: {"source": filename}}})
+            streams = addstream['streams']
+            if streams.get('incomplete list') == 1 and name in streams:
+                if filename.endswith(AUDIO_EXTENSIONS):
+                    return redirect('/streaming/audio')
+                elif filename.endswith(VIDEO_EXTENSIONS):
+                    return redirect('/streaming/video')
+            raise exceptions.InternalServerError('Failed to add stream')
+        raise exceptions.BadRequest('\'name\' and/or \'file\' are not valid')
 
 
-def streamer(template_name, extensions, stream_name):
+def streamer(template_name, extensions):
     ms_api = ms.api()
-    filtered = {k: v for k, v in ms_api['streams'].items() if v['source'].endswith(extensions)}
-    if stream_name and stream_name not in filtered:
-        raise abort(404)
-    streams = [v for k, v in filtered.items()]
-    return render_template(template_name, streams=streams, stream_name=stream_name, mistserver_host=ms.HOST)
+    streams = [v for k, v in ms_api['streams'].items() if v['source'].endswith(extensions)]
+    return render_template(template_name, streams=streams, mistserver_host=ms.HOST)
 
 
-@app.route('/streaming/audio', defaults={'stream_name': None})
-@app.route('/streaming/audio/<path:stream_name>')
-def streaming_audio(stream_name):
-    return streamer('streaming/audio.html', AUDIO_EXTENSIONS, stream_name)
+@app.route('/streaming/audio')
+def streaming_audio():
+    return streamer('streaming/audio.html', AUDIO_EXTENSIONS)
 
 
-@app.route('/streaming/video', defaults={'stream_name': None})
-@app.route('/streaming/video/<path:stream_name>')
-def streaming_video(stream_name):
-    return streamer('streaming/video.html', VIDEO_EXTENSIONS, stream_name)
+@app.route('/streaming/video')
+def streaming_video():
+    return streamer('streaming/video.html', VIDEO_EXTENSIONS)
 
 
 @app.route('/info_<path:stream_name>.js')

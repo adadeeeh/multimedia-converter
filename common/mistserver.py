@@ -1,7 +1,7 @@
 import os
 
 import requests
-from werkzeug.exceptions import BadRequest
+from werkzeug.exceptions import Unauthorized, InternalServerError
 from werkzeug.utils import secure_filename
 
 from common import util
@@ -27,7 +27,7 @@ class MistServer:
             return {}
 
         if not self.USERNAME or not self.PASSWORD:
-            raise BadRequest('A challenge is required but no username and/or password is provided')
+            raise Unauthorized('A challenge is required but no username and/or password is provided')
 
         return {'authorize': {'username': self.USERNAME, 'password': self.get_password()}}
 
@@ -44,7 +44,10 @@ class MistServer:
         return '%s:4242/api%s' % (self.HOST, self.build_command(command))
 
     def request(self, command):
-        return requests.get(self.build_url(command)).json()
+        try:
+            return requests.get(self.build_url(command)).json()
+        except:
+            raise InternalServerError('Failed contacting MistServer')
 
     def save(self, file):
         os.makedirs(self.MEDIA_FOLDER, exist_ok=True)
@@ -62,7 +65,7 @@ class MistServer:
             response = self.request(command)
 
             if response['authorize']['status'] != 'OK':
-                raise BadRequest('Username and/or password provided for MistServer are not valid')
+                raise Unauthorized('Username and/or password provided for MistServer are not valid')
 
         response['streams'] = response.get('streams') or dict()
         return response
