@@ -1,17 +1,16 @@
 import os
 import time
 
-import requests
-from flask import Flask, render_template, request, send_from_directory, abort, url_for, redirect
-from werkzeug.utils import secure_filename
+from flask import *
 
-from common import util
+from common import util, mistserver
 from convert import video, image, audio
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = util.UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 500 * 1024 * 1024  # 50 MB
 
+ms = mistserver.MistServer()
 AUDIO_EXTENSIONS = ('mp3', 'wmv')
 VIDEO_EXTENSIONS = ('mp4', 'mkv')
 
@@ -70,13 +69,9 @@ def add_stream():
         return render_template('streaming/add.html')
     else:
         name = request.values.get('name')
-        file = request.files['file']
-        filename = os.path.join(util.MISTSERVER_FOLDER, secure_filename(file.filename))
-        file.save(filename)
-        addstream = requests.get(
-            'http://localhost:4242/api?command={"addstream": {"%s": {"source": "%s"}}}' % (name, filename)).json()
+        filename = ms.save(request.files['file'])
+        addstream = ms.api({'addstream': {name: {"source": filename}}})
         streams = addstream['streams']
-        print(streams)
         if streams['incomplete list'] == 1 and name in streams:
             if filename.endswith(AUDIO_EXTENSIONS):
                 return redirect('/streaming/audio')
@@ -86,12 +81,12 @@ def add_stream():
 
 
 def streamer(template_name, extensions, stream_name):
-    ms_api = requests.get(util.MISTSERVER_API).json()
+    ms_api = ms.api()
     filtered = {k: v for k, v in ms_api['streams'].items() if v['source'].endswith(extensions)}
     if stream_name and stream_name not in filtered:
         raise abort(404)
     streams = [v for k, v in filtered.items()]
-    return render_template(template_name, streams=streams, stream_name=stream_name)
+    return render_template(template_name, streams=streams, stream_name=stream_name, mistserver_host=ms.HOST)
 
 
 @app.route('/streaming/audio', defaults={'stream_name': None})
@@ -104,6 +99,11 @@ def streaming_audio(stream_name):
 @app.route('/streaming/video/<path:stream_name>')
 def streaming_video(stream_name):
     return streamer('streaming/video.html', VIDEO_EXTENSIONS, stream_name)
+
+
+@app.route('/')
+def index():
+    return request.endpoint
 
 
 if __name__ == '__main__':

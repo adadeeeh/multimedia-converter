@@ -13,7 +13,12 @@
 <body>
     <div>
         <div class="mistvideo" id="mistplayer">
-            <script src="../../static/js/player.js"></script>
+            <script>
+                mistoptions = {
+                    host: '//{{ mistserver_host }}:8080'
+                };
+            </script>
+            <script src="http://{{ mistserver_host }}:8080/player.js"></script>
 
             <script>
             var play = function(stream_name) {
@@ -24,7 +29,9 @@
                 });
             };
 
-            play("{{ stream_name }}");
+            {% if stream_name %}
+                play("{{ stream_name }}");
+            {% endif %}
             </script>
         </div>
     </div>
