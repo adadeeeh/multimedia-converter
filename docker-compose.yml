@@ -1,0 +1,29 @@
+version: '3.7'
+services:
+  jarmul:
+    container_name: multimedia-network-app
+    build: .
+    image: adadeeeh/multimedia-converter
+    restart: always
+    environment:
+      - MISTSERVER_HOST=HOST
+      - MISTSERVER_MEDIA_FOLDER=/media
+      - MISTSERVER_USERNAME=USERNAME
+      - MISTSERVER_PASSWORD=PASSWORD
+    ports:
+      - "127.0.0.1:61200:5000"
+    volumes:
+      - ./.mistserver/media:/mistserver/media
+  mistserver:
+    container_name: multimedia-network-mistserver
+    image: r0gger/mistserver
+    restart: always
+    ports:
+      - "127.0.0.1:61201:554"
+      - "127.0.0.1:61202:1935"
+      - "127.0.0.1:61203:4242"
+      - "127.0.0.1:61204:8080"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./.mistserver/config:/config
+      - ./.mistserver/media:/media
