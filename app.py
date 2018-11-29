@@ -16,6 +16,9 @@ ms = mistserver.MistServer()
 AUDIO_EXTENSIONS = ('mp3', 'wmv')
 VIDEO_EXTENSIONS = ('mp4', 'mkv')
 
+@app.route('/')
+def home():
+    return render_template('index.html')
 
 @app.route('/convert/audio')
 def hello_world():
@@ -114,4 +117,4 @@ def secure_stream_info(stream_name):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
